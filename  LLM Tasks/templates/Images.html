@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen AI Tasks</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://www.popsci.com/wp-content/uploads/2024/04/01/00-header.jpg?w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 320px;
+        }
+
+        .custom-select select {
+            display: none; /* Hide the default select element */
+        }
+
+        .select-selected {
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+            font-size: 18px;
+            color: #000; /* Text color for the selected item */
+        }
+
+        .select-selected:after {
+            content: "\25BC"; /* Down arrow */
+            font-size: 12px;
+            color: #000;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .select-selected.select-arrow-active:after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .select-items {
+            position: absolute;
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 12px;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 9999; /* Ensure dropdown appears above other elements */
+        }
+
+        .select-items div {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #000; /* Text color for dropdown items */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .select-items div:hover {
+            background-color: #f0f0f0;
+            color: #000; /* Color on hover for better visibility */
+        }
+
+        .select-items.select-show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Gen AI Tasks</h1>
+        <div class="custom-select">
+            <div class="select-selected">Select Image Task</div>
+            <div class="select-items">
+                <div id = 'ic'>Image Classification</div>
+                <div id = 'iti'>Image captioning</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.select-selected').addEventListener('click', function() {
+            this.classList.toggle('select-arrow-active');
+            this.nextElementSibling.classList.toggle('select-show');
+        });
+
+        document.querySelectorAll('.select-items div').forEach(function(option) {
+            option.addEventListener('click', function() {
+                var selectSelected = this.parentNode.previousElementSibling;
+                selectSelected.innerHTML = this.innerHTML;
+                selectSelected.click();
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!document.querySelector('.custom-select').contains(e.target)) {
+                document.querySelector('.select-selected').classList.remove('select-arrow-active');
+                document.querySelector('.select-items').classList.remove('select-show');
+            }
+        });
+
+        document.getElementById('ic').addEventListener('click',function(event)
+        {
+            next3()
+        });
+        function next3()
+        {
+            window.location.href = 'IC'
+        }
+
+        document.getElementById('iti').addEventListener('click',function(event)
+        {
+            next4()
+        });
+        function next4()
+        {
+            window.location.href = 'ITI'
+        }
+    </script>
+</body>
+</html>

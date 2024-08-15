@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Selection</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .button {
+            background-color: #333;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .button img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .label {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <button class="button" id = "b1">
+                <img src="{% static 'images/NLP.jpg.avif' %}" alt="NLP Tasks">
+            </button>
+            <div class="label">NLP Tasks</div>
+        </div>
+        <div>
+            <button class="button" id = b2>
+                <img src="{% static 'images/images.jpeg' %}" alt="Image Tasks">
+            </button>
+            <div class="label">Image Tasks</div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("b1").addEventListener("click",function(event)
+        {
+            next1()
+        });
+        function next1()
+        {
+            window.location.href = "NLP"
+        }
+        document.getElementById("b2").addEventListener("click",function(event)
+        {
+            next2()
+        });
+        function next2()
+        {
+            window.location.href = "Image"
+        }
+    </script>
+</body>
+</html>

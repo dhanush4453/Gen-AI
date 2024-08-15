@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/22606/images/6e8668f-de5f-1bf-c445-8b30533b427d_object-recognition-dogs.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            animation: slideIn 1.2s ease-in-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .upload-section {
+            margin: 20px 0;
+            position: relative;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .upload-section input[type="file"] {
+            display: none;
+        }
+        .upload-label {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #f06595);
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .upload-label:hover {
+            transform: scale(1.1);
+        }
+        .text-field {
+            margin: 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .text-field input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #f06595;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .text-field input[type="text"]:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(240, 101, 149, 0.5);
+        }
+        .submit-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+        .submit-btn:hover {
+            transform: scale(1.1);
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload an Image and Get the Classification</h2>
+        <form id="image-form" enctype="multipart/form-data">
+            <div class="upload-section">
+                <label for="image-upload" class="upload-label">Choose Image</label>
+                <input type="file" id="image-upload" name="image-upload" accept="image/*">
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <div class="text-field">
+            <input type="text" id="response" name="response" placeholder="Classification Result" readonly>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('image-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            const imageFile = document.getElementById('image-upload').files[0];
+            if (!imageFile) {
+                alert("Please select an image file.");
+                return;
+            }
+
+            formData.append('image-upload', imageFile);
+
+            fetch('/classify/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Update the text field with the classification result
+                const responseField = document.getElementById('response');
+                responseField.value = data.label;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error processing the image.');
+            });
+        });
+    </script>
+</body>
+</html>
